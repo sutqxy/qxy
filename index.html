@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>曲星宇学生通讯录与学术成果系统</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Leaflet 核心样式 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css" />
+    <!-- 全屏插件样式 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@2.4.0/Control.FullScreen.css" />
+  
+    <style>
+        /* ================== 通用样式 ================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* ================== 密码验证层 ================== */
+        #passwordOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.sut.edu.cn/images/damen.jpg') #f0f4f7;
+            background-size: cover;
+            background-position: center;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        #passwordOverlay > div {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            text-align: center;
+            backdrop-filter: blur(2px);
+        }
+
+
+
+
+
+
+
+a {
+
+    color: #2c3e50;
+
+    text-decoration: none;
+
+}
+
+a:hover {
+
+    text-decoration: none;
+
+}
+
+
+        /* ================== 点击心出现页面 ================== */
+
+        /* 原有样式保持不变 */
+        html, body { 
+            height: 100%; 
+            margin: 0; 
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        #map { 
+            height: 100%; 
+            background: #f0f4f7;/* 页面转换时候的颜色 */
+        }
+        .custom-marker {
+            color: #e91e63;
+            font-size: 20px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);/* 标记的心外围的颜色 */
+            transition: transform 0.2s;
+        }
+        .leaflet-popup-content h3 {
+            margin: 5px 0;
+            color: #e91e63;/* 张爽名字的颜色 */
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+        }
+        .leaflet-popup-content p {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+        .info-icon {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+
+/* ================== 筛选按钮激活状态 ================== */
+
+
+	.filter-item.active {
+    	background: #3498db;
+    	color: white;
+    	border-color: #3498db;
+	}
+
+	.filter-item.active:hover {
+   	 background: #2980b9;
+    	border-color: #2980b9;
+	}
+
+
+
+
+        /* ================== 地图页面样式 ================== */
+        #mapPage {
+            display: none;
+            height: 100vh;
+            position: relative;
+        }
+
+        #map { 
+            height: 100vh;
+            width: 100vw;
+            background: #f0f4f7;
+        }
+
+        .search-container {
+            position: absolute;
+            top: 20px;
+            left: 60px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            width: 300px;
+        }
+
+        #searchInput {
+            width: 70%;
+            padding: 8px;
+            margin-right: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        #searchButton {
+            padding: 8px 15px;
+            background: rgba(233, 30, 99, 0.9);
+            border: none;
+            color: white;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        #academicButton {
+            padding: 8px 15px;
+            background: rgba(233, 30, 99, 0.9);
+            border: none;
+            color: white;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .nav-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+
+        /* ================== 学术成果页面样式 ================== */
+
+        #academicPage {
+            display: none;
+            height: 100vh;
+            overflow-y: auto;
+            background: #f5f5f5;
+        }
+
+        .academic-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        #returnButton {
+            padding: 12px 15px;
+            background: #e91e63;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+        }
+
+        .filters {
+            padding: 1rem;
+            background: white;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-item {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .paper-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        .paper-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+
+
+
+
+        /* 方形照片样式 */
+        .author-profile {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .author-photo {
+            width: 80px;
+            height: 100px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 3px solid #3498db;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .author-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .author-motto {
+            flex: 1;
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            padding: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .author-motto::before {
+            content: "〝";
+            font-size: 2em;
+            color: #3498db;
+            position: absolute;
+            left: -8px;
+            top: -12px;
+        }
+
+        .paper-title {
+            order: 2;
+            color: #2c3e50;
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+            line-height: 1.4;
+        }
+
+        .paper-authors {
+            order: 3;
+            color: #2c3e50;
+            font-size: 0.95rem;
+            margin: 0.5rem 0;
+        }
+
+        .paper-info {
+            order: 4;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+            margin-top: auto;
+        }
+
+        .paper-journal {
+            color: #3498db;
+            font-weight: bold;
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .paper-date {
+            color: #95a5a6;
+            font-size: 0.85rem;
+        }
+
+        .paper-doi {
+            font-size: 0.8rem;
+            color: #95a5a6;
+            word-break: break-all;
+        }
+
+
+
+
+
+
+        /* ================== 标记样式 ================== */
+
+        .custom-marker {
+            color: #e91e63;
+            font-size: 20px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+            transition: transform 0.2s;
+        }
+
+
+        /* ================== 响应式设计 ================== */
+        @media (max-width: 768px) {
+            .search-container {
+                left: 20px;
+                width: calc(100% - 40px);
+            }
+            
+            .nav-container {
+                right: 10px;
+                top: 10px;
+            }
+            
+            .paper-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 密码验证层 -->
+    <div id="passwordOverlay">
+        <div>
+            <h2 style="color:#e91e63;margin-bottom:20px;">曲星宇学生通讯录</h2>
+            <input type="password" id="passwordInput" placeholder="请输入访问密码" 
+                   style="padding:10px;margin-bottom:15px;width:200px;border:1px solid #ddd;border-radius:4px;">
+            <br>
+            <button onclick="checkPassword()" 
+                    style="padding:8px 20px;background:#e91e63;color:white;border:none;border-radius:4px;cursor:pointer;">
+                进入系统
+            </button>
+            <p id="errorMsg" style="color:red;margin-top:10px;height:20px;"></p>
+        </div>
+    </div>
+
+    <!-- 地图页面 -->
+    <div id="mapPage">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="输入姓名、地址或年级...">
+            <button id="searchButton">搜索</button>
+        </div>
+        
+        <div class="nav-container">
+            <button id="academicButton" style="background:rgba(233, 30, 99, 0.9)">学术成果</button>
+        </div>
+        
+        <div id="map"></div>
+    </div>
+
+    <!-- 学术成果页面 -->
+    <div id="academicPage">
+        <header class="academic-header">
+            <button id="returnButton">← 返回地图</button>
+            <h1>学术成果荣誉墙</h1>
+            <p>师生共同创造的智慧结晶</p>
+        </header>
+
+        <div class="filters">
+            <div class="filter-item active" data-filter-type="all">全部</div>
+
+            <div class="filter-item" data-filter-type="year" data-filter-value="2024">2024年度</div>
+            <div class="filter-item" data-filter-type="year" data-filter-value="2025">2025年度</div>
+            <div class="filter-item" data-filter-type="type" data-filter-value="sci">SCI期刊</div>
+            <div class="filter-item" data-filter-type="type" data-filter-value="ei">EI期刊</div>
+            <div class="filter-item" data-filter-type="type" data-filter-value="core">北大核心</div>
+            <div class="filter-item" data-filter-type="type" data-filter-value="tech">科技核心</div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="paper-grid">
+
+            <!--------------------------------------2021届-------------------------------------->
+
+            <div class="paper-card" data-year="2024" data-type="core">
+                <div class="author-profile">
+                    <img src="images/zhuzhenkang.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>种子在泥土里不说话，但它终会开花。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">朱振康</h2>
+                <div class="paper-authors">
+                    内置式永磁同步电机无传感器最小损耗控制
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">组合机床与自动化加工技术 </div>
+                    <div class="paper-date">发表日期：2024-11-01 </div>
+                    <div class="paper-doi">DOI: 10.13462/j.cnki.mmtamt.2024.11.018 </div>
+                </div>
+            </div>
+
+
+
+            <div class="paper-card" data-year="2024" data-type="tech">
+                <div class="author-profile">
+                    <img src="images/yiguanzheng.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>人生没有白走的路，每一步都算数。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">衣冠正</h2>
+                <div class="paper-authors">
+                    永磁同步电机改进滑模无位置传感器控制
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">微特电机 </div>
+                    <div class="paper-date">发表日期：2024-05-28 </div>
+                    <div class="paper-doi">DOI: 10.20026/j.cnki.ssemj.2024.0065 </div>
+                </div>
+            </div>
+
+
+
+         <!-------------------------------------------------------------------------------------->
+
+
+
+
+
+            <!--------------------------------------2022届-------------------------------------->
+
+            <div class="paper-card" data-year="2024" data-type="sci">
+                <div class="author-profile">
+                    <img src="images/lizhenyang.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>抱朴守拙，行稳致远。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">李振洋</h2>
+                <div class="paper-authors">
+                    Research on improved active disturbance rejection control strategy for hydraulic-driven Stewart stabilization platform
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">Industrial Robot </div>
+                    <div class="paper-date">发表日期：2024-05-16 </div>
+                    <div class="paper-doi">DOI: 10.1108/IR-03-2024-0086 </div>
+                </div>
+            </div>
+
+
+            <div class="paper-card" data-year="2024" data-type="sci">
+                <div class="author-profile">
+                    <img src="images/wangqinghe.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>文献读不懂很正常，但别停在第一页。重复和坚持会突然某一天让你豁然开朗。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">王庆鹤</h2>
+                <div class="paper-authors">
+                    Novel deadbeat direct torque and flux control for interior permanent magnet synchronous motor
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">Electrical Engineering</div>
+                    <div class="paper-date">发表日期：2024-07-05</div>
+                    <div class="paper-doi">DOI: 10.1007/s00202-024-02606-2</div>
+                </div>
+            </div>
+
+
+
+            <div class="paper-card" data-year="2024" data-type="sci">
+                <div class="author-profile">
+                    <img src="images/pengchengkun.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>理论是骨架，实践是血肉。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">彭成坤</h2>
+                <div class="paper-authors">
+	    <a href="https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/cps2.12104">
+                    A three‐vector model predicting torque control of permanent magnet synchronous motor with a fixed weight coefficient
+	    </a>
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">IET Cyber-Physical Systems: Theory & Applications </div>
+                    <div class="paper-date">发表日期：2024-11-14 </div>
+                    <div class="paper-doi">DOI: 10.1049/cps2.12104 </div>
+                </div>
+            </div>
+
+
+
+            <div class="paper-card" data-year="2025" data-type="core">
+                <div class="author-profile">
+                    <img src="images/chenqilong.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>坚持 、稳重。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">陈启隆</h2>
+                <div class="paper-authors">
+                    结合扰动观测器的Stewart平台改进非奇异终端滑模控制
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">组合机床与自动化加工技术</div>
+                    <div class="paper-date">发表日期：2025-03-25 </div>
+                    <div class="paper-doi">DOI: 10.1049/cps2.12104 </div>
+                </div>
+            </div>
+
+
+         <!-------------------------------------------------------------------------------------->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- 其他论文卡片... -->
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Leaflet 核心库 -->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
+    <!-- 全屏插件 -->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@2.4.0/Control.FullScreen.min.js"></script>
+
+    <script>
+        // ================== 全局配置 ==================
+        const ENCODED_PASSWORD = 'MU3V0MjAyNQ=='; // Base64编码的Sut2025，设置密码
+        let loginAttempts = 0;
+        let mapInstance = null;
+        let allMarkers = [];
+
+        // ================== 系统状态管理 ==================
+        const systemState = {
+            authenticated: false,
+            currentPage: 'map',
+            academicFilters: {
+                years: new Set(),
+                types: new Set()
+            }
+        };
+
+        // ================== 页面控制 ==================
+        function showPage(pageId) {
+            document.querySelectorAll('[id$="Page"]').forEach(page => {
+                page.style.display = 'none';
+            });
+            document.getElementById(pageId).style.display = 'block';
+            
+            if(pageId === 'mapPage' && mapInstance) {
+                setTimeout(() => mapInstance.invalidateSize(), 100);
+            }
+        }
+
+
+        // ================== 密码验证 ==================
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const errorMsg = document.getElementById('errorMsg');
+            
+            if (btoa(input) === ENCODED_PASSWORD) {
+                systemState.authenticated = true;
+                sessionStorage.setItem('authenticated', 'true');
+                document.getElementById('passwordOverlay').style.display = 'none';
+                initializeSystem();
+            } else {
+                handleFailedLogin(errorMsg);
+            }
+        }
+
+        function handleFailedLogin(errorMsg) {
+            loginAttempts++;
+            errorMsg.textContent = `密码错误（已尝试 ${loginAttempts} 次）`;
+            passwordInput.style.border = '2px solid red';
+            setTimeout(() => passwordInput.style.border = '1px solid #ddd', 500);
+            
+            if(loginAttempts >= 5) {
+                errorMsg.textContent += ' - 系统已暂时锁定';
+                passwordInput.disabled = true;
+                setTimeout(() => {
+                    passwordInput.disabled = false;
+                    loginAttempts = 0;
+                    errorMsg.textContent = '';
+                }, 30000);
+            }
+        }
+
+
+        // ================== 地图功能 ==================
+        function initializeMap() {
+            // 地图初始化
+            mapInstance = L.map('map').setView([34.0, 113.0], 5);
+
+            // 添加高德地图图层
+            L.tileLayer('http://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
+                subdomains: ['1','2','3','4'],
+                attribution: '© 曲星宇学生通讯录'
+            }).addTo(mapInstance);
+
+            // 添加全屏控件
+            L.control.fullscreen({
+                position: 'topleft',
+                title: '全屏显示',
+                titleCancel: '退出全屏',
+                forceSeparateButton: true
+            }).addTo(mapInstance);
+
+
+
+
+            // 创建标记
+            const locations = [
+
+                // 河南省
+                { lat: 32.696,   lng: 112.838,   title: '张爽  女',        address: '河南省南阳市唐河县',            phone: '13840564879',  feature: '2023级博士研究生',  photo: 'images/zhangshuang.jpg' },
+                { lat: 34.065,   lng: 114.855,   title: '彭成坤  男',    address: '河南省周口市太康县清集镇',   phone: '18524610813',  feature: '2024级博士研究生',  photo: 'images/pengchengkun.jpg'},
+                { lat: 34.1628, lng: 113.4789, title: '王庆鹤  男',   address: '河南省许昌市禹州市',              phone: '15736812993',  feature: '2022级硕士研究生', photo: 'images/wangqinghe.jpg'},
+                { lat: 33.7315, lng: 114.8863, title: '李振洋  男',   address: '河南省周口市淮阳区',             phone: '15093841963',  feature: '2022级硕士研究生', photo: 'images/lizhenyang.jpg' },
+                { lat: 33.3878, lng: 114.0263, title: '陈启隆  男',   address: '河南省驻马店市西平县',         phone: '17589500047',   feature: '2022级硕士研究生', photo: 'images/wangqinghe.jpg' },
+                { lat: 35.3633, lng: 113.8647, title: '张旭晨  男',   address: '河南省新乡市卫滨区',             phone: '18567565163',  feature: '2024级硕士研究生', photo: 'images/wangqinghe.jpg' },
+                { lat: 34.653,  lng: 115.148,  title: '杜甫哲  男',   address: '河南省商丘市民权县',               phone: '18740058117', feature: '2023级硕士研究生', photo: 'images/wangqinghe.jpg' },
+
+                
+                // 山东省
+                { lat: 36.8164, lng: 118.0175, title: '燕秋雨  男',   address: '山东省淄博市张店区',      phone: '18560399610',  feature: '2021级硕士研究生', photo: 'images/wangqinghe.jpg' },
+                { lat: 36.494,  lng: 117.858,  title: '翟家圣  男',   address: '山东省淄博市博山区',        phone: '17852978573',  feature: '2023级硕士研究生', photo: 'images/wangqinghe.jpg' },
+                { lat: 35.113,  lng: 117.165,  title: '乔成祥  男',   address: '山东省枣庄市滕州',           phone: '13176370732',  feature: '2023级硕士研究生', photo: 'images/wangqinghe.jpg' },
+
+
+                
+                // 辽宁省
+                { lat: 41.5333, lng: 121.2333, title: '宁浩楠  男',   address: '辽宁省锦州市义县',         phone: '13840638259',  feature: '2024级硕士研究生', photo: 'images/wangqinghe.jpg' },
+                { lat: 40.7912, lng: 119.8365, title: '李昌健  男',   address: '辽宁省葫芦岛市建昌县',  phone: '18525733396',    feature: '2022级硕士研究生', photo: 'images/wangqinghe.jpg' },
+                { lat: 41.0894, lng: 122.9497, title: '由治斌  男',   address: '辽宁省鞍山市千山区',     phone: '13309812730',   feature: '2024级硕士研究生', photo: 'images/wangqinghe.jpg' },
+                { lat: 41.783,  lng: 121.422,  title: '李健  男',       address: '辽宁省阜新市清河门区',  phone: '14740805882',  feature: '2023级硕士研究生', photo: 'images/wangqinghe.jpg' },
+                { lat: 41.426,  lng: 123.339,  title: '朱健珲  男',    address: '辽宁省辽阳市灯塔市',      phone: '18740232108',  feature: '2023级硕士研究生', photo: 'images/wangqinghe.jpg' },
+                { lat: 42.546,  lng: 124.038,  title: '闫盛硕  男',    address: '辽宁省铁岭市开原市',      phone: '13236753305',  feature: '2023级硕士研究生', photo: 'images/wangqinghe.jpg' },
+
+
+
+                // 安徽省
+                { lat: 33.5572, lng: 117.5584, title: '张冕  男',   address: '安徽省宿州市灵璧县',      phone: '18055781217',  feature: '2022级硕士研究生', photo: 'images/wangqinghe.jpg' },
+
+
+                // 宁夏回族自治区
+                { lat: 39.2345, lng: 106.7843, title: '衣冠正  男', address: '宁夏石嘴山市石嘴山区',     phone: '13259627138',  feature: '2021级硕士研究生', photo: 'images/wangqinghe.jpg' },
+
+
+                // 广西壮族自治区
+                { lat: 23.2179, lng: 108.8165, title: '朱振康  男',   address: '广西南宁市宾阳县',        phone: '17624074048',  feature: '2021级硕士研究生', photo: 'images/wangqinghe.jpg' },
+
+
+                // 贵州省
+                { lat: 27.3021, lng: 105.2983, title: '刘鹏  男',   address: '贵州省毕节市毕节市',      phone: '18386095786',  feature: '2024级硕士研究生', photo: 'images/wangqinghe.jpg' },
+
+
+                // 江西省
+                { lat: 27.0400, lng: 114.9117, title: '肖身智  男',   address: '江西省吉安市吉安县',      phone: '15949668941',  feature: '2024级硕士研究生', photo: 'images/wangqinghe.jpg' },
+
+
+                // 浙江省
+                { lat: 29.2895, lng: 120.2416, title: '虞舒捷  男',   address: '浙江省金华市东阳市',     phone: '15167972866',   feature: '2024级硕士研究生', photo: 'images/wangqinghe.jpg' }
+
+
+
+
+
+];
+        
+
+
+
+
+
+
+
+
+
+
+
+
+    locations.forEach(loc => createMapMarker(loc));
+
+            // 事件绑定
+            mapInstance.on('contextmenu', handleRightClick);
+            document.getElementById('searchButton').addEventListener('click', performSearch);
+            document.getElementById('searchInput').addEventListener('keypress', handleSearchEnter);
+        }
+
+
+
+function createPopupContent(location) {
+    return `
+        <div style="min-width:240px">
+            <h3>${location.title}</h3>
+            <p><span class="info-icon">📍 地址:</span>${location.address}</p>
+            <p><span class="info-icon">📞电话:</span>${location.phone}</p>
+            <p><span class="info-icon">🌟年级:</span>${location.feature}</p>
+        </div>
+    `;
+}
+
+
+
+
+
+        function createMapMarker(location) {
+            const marker = L.marker([location.lat, location.lng], {
+                icon: L.divIcon({
+                    className: 'custom-marker',
+                    html: '💗',
+                    iconSize: [36, 36]
+                }),
+                title: location.title,
+                riseOnHover: true
+            }).bindPopup(createPopupContent(location));
+            
+            allMarkers.push(marker.addTo(mapInstance));
+            return marker;
+        }
+
+        // ================== 学术成果功能 ==================
+        function initializeAcademicPage() {
+            const filterItems = document.querySelectorAll('.filter-item');
+            const paperCards = document.querySelectorAll('.paper-card');
+
+            filterItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    handleFilterClick(this);
+                });
+            });
+
+            paperCards.forEach(card => card.style.display = 'block');
+        }
+
+
+// ================== 修改后的学术筛选功能 ==================
+function handleFilterClick(clickedItem) {
+    const filterType = clickedItem.dataset.filterType;
+    const filterValue = clickedItem.dataset.filterValue;
+    const allButton = document.querySelector('[data-filter-type="all"]');
+
+    if (filterType === 'all') {
+        // 点击"全部"时重置所有筛选
+        document.querySelectorAll('.filter-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        clickedItem.classList.add('active');
+        resetAllFilters();
+    } else {
+        // 移除"全部"按钮的激活状态
+        allButton.classList.remove('active');
+        
+        // 处理类型筛选的互斥逻辑
+        if(filterType === 'type') {
+            document.querySelectorAll('[data-filter-type="type"]').forEach(item => {
+                if(item !== clickedItem) item.classList.remove('active');
+            });
+        }
+
+        // 切换当前按钮状态
+        clickedItem.classList.toggle('active');
+        
+        // 更新筛选状态
+        const filterSet = filterType === 'year' ? 
+            systemState.academicFilters.years : 
+            systemState.academicFilters.types;
+        
+        if (clickedItem.classList.contains('active')) {
+            filterSet.add(filterValue);
+        } else {
+            filterSet.delete(filterValue);
+        }
+    }
+
+    // 自动更新"全部"按钮状态
+    updateAllButtonState();
+    applyAcademicFilters();
+}
+
+
+
+
+function updateAllButtonState() {
+    const allButton = document.querySelector('[data-filter-type="all"]');
+    const isAllActive = systemState.academicFilters.years.size === 0 && 
+                      systemState.academicFilters.types.size === 0;
+    
+    allButton.classList.toggle('active', isAllActive);
+}
+
+
+
+        // ================== 事件处理 ==================
+        document.addEventListener('DOMContentLoaded', function() {
+            if (sessionStorage.getItem('authenticated')) {
+                systemState.authenticated = true;
+                document.getElementById('passwordOverlay').style.display = 'none';
+                initializeSystem();
+            }
+
+            document.getElementById('academicButton').addEventListener('click', () => {
+                showPage('academicPage');
+            });
+
+            document.getElementById('returnButton').addEventListener('click', () => {
+                showPage('mapPage');
+            });
+        });
+
+        // ================== 系统初始化 ==================
+// ================== 修改后的初始化函数 ==================
+function initializeAcademicPage() {
+    // 初始化激活状态
+    document.querySelector('[data-filter-type="all"]').classList.add('active');
+    
+    // 事件委托处理点击
+    document.getElementById('academicPage').addEventListener('click', function(e) {
+        const filterItem = e.target.closest('.filter-item');
+        if (filterItem) {
+            // 阻止同时激活多个类型筛选
+            if(filterItem.dataset.filterType === 'type') {
+                document.querySelectorAll('[data-filter-type="type"]').forEach(item => {
+                    if(item !== filterItem) item.classList.remove('active');
+                });
+            }
+            handleFilterClick(filterItem);
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+// ================== 地图搜索功能 ==================
+function performSearch() {
+    const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
+    let hasMatch = false;
+    let matchBounds = [];
+
+    allMarkers.forEach(marker => {
+        const content = marker.getPopup().getContent().toLowerCase();
+        const isMatch = content.includes(keyword);
+        const icon = marker.getIcon();
+
+        if (isMatch) {
+            // 更新匹配标记样式
+            if (!icon.options.html.includes('💛')) {
+                icon.options.html = '💛';
+                marker.setIcon(icon);
+            }
+            marker.openPopup();
+            matchBounds.push(marker.getLatLng());
+            hasMatch = true;
+        } else {
+            // 恢复默认样式
+            if (icon.options.html !== '💗') {
+                icon.options.html = '💗';
+                marker.setIcon(icon);
+            }
+            marker.closePopup();
+        }
+    });
+
+    // 调整地图视图
+    if (matchBounds.length > 0) {
+        const bounds = L.latLngBounds(matchBounds);
+        mapInstance.flyToBounds(bounds.pad(0.1), {
+            duration: 1,
+            easeLinearity: 0.25
+        });
+    } else if (keyword) {
+        alert('未找到匹配结果');
+    }
+}
+
+// 搜索输入框回车事件
+function handleSearchEnter(e) {
+    if (e.key === 'Enter') performSearch();
+}
+
+// ================== 学术过滤功能 ==================
+function resetAllFilters() {
+    systemState.academicFilters.years.clear();
+    systemState.academicFilters.types.clear();
+    document.querySelectorAll('.filter-item:not([data-filter-type="all"])')
+        .forEach(btn => btn.classList.remove('active'));
+}
+
+function toggleFilterState(element, type, value) {
+    element.classList.toggle('active');
+    const filterSet = type === 'year' ? 
+        systemState.academicFilters.years : 
+        systemState.academicFilters.types;
+
+    element.classList.contains('active') ? 
+        filterSet.add(value) : 
+        filterSet.delete(value);
+}
+
+function applyAcademicFilters() {
+    const { years, types } = systemState.academicFilters;
+    const academicPage = document.getElementById('academicPage');
+    const paperCards = academicPage.querySelectorAll('.paper-card');
+
+    paperCards.forEach(card => {
+        const cardYear = card.dataset.year;
+        const cardType = card.dataset.type;
+        const yearMatch = years.size === 0 || years.has(cardYear);
+        const typeMatch = types.size === 0 || types.has(cardType);
+        
+        card.style.display = (yearMatch && typeMatch) ? 'block' : 'none';
+    });
+}
+// ================== 地图右键坐标处理 ==================
+function handleRightClick(e) {
+    const { lat, lng } = e.latlng;
+    console.log('坐标信息:', `纬度: ${lat.toFixed(4)}, 经度: ${lng.toFixed(4)}`);
+    
+    // 可选：显示坐标弹窗
+    L.popup()
+        .setLatLng(e.latlng)
+        .setContent(`坐标位置:<br>${lat.toFixed(4)}, ${lng.toFixed(4)}`)
+        .openOn(mapInstance);
+}
+
+// ================== 初始化函数补充 ==================
+
+
+
+
+// 初始化事件绑定
+function initializeEventListeners() {
+    // 地图页面事件
+    document.getElementById('searchButton').addEventListener('click', performSearch);
+    document.getElementById('searchInput').addEventListener('keypress', handleSearchEnter);
+    
+    // 学术页面事件
+    document.querySelectorAll('.filter-item').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const filterType = this.dataset.filterType;
+            const filterValue = this.dataset.filterValue;
+            
+            if (filterType === 'all') {
+                resetAllFilters();
+            } else {
+                toggleFilterState(this, filterType, filterValue);
+            }
+            applyAcademicFilters();
+            updateAllButtonState();
+        });
+    });
+}
+
+// 最终系统初始化
+function initializeSystem() {
+    initializeMap();
+    initializeEventListeners();
+    showPage('mapPage');
+    
+    // 首次加载时应用默认过滤
+    applyAcademicFilters();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
