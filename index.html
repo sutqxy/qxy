@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>曲星宇学生通讯录与学术成果系统</title>
+    <title>曲星宇学生通讯录</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -53,24 +53,6 @@
 
 
 
-
-
-
-a {
-
-    color: #2c3e50;
-
-    text-decoration: none;
-
-}
-
-a:hover {
-
-    text-decoration: none;
-
-}
-
-
         /* ================== 点击心出现页面 ================== */
 
         /* 原有样式保持不变 */
@@ -106,8 +88,6 @@ a:hover {
 
 
 /* ================== 筛选按钮激活状态 ================== */
-
-
 	.filter-item.active {
     	background: #3498db;
     	color: white;
@@ -186,9 +166,7 @@ a:hover {
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-
         /* ================== 学术成果页面样式 ================== */
-
         #academicPage {
             display: none;
             height: 100vh;
@@ -255,6 +233,7 @@ a:hover {
             display: flex;
             flex-direction: column;
         }
+
 
 
 
@@ -350,14 +329,12 @@ a:hover {
 
 
         /* ================== 标记样式 ================== */
-
         .custom-marker {
             color: #e91e63;
             font-size: 20px;
             text-shadow: 0 0 10px rgba(255,255,255,0.8);
             transition: transform 0.2s;
         }
-
 
         /* ================== 响应式设计 ================== */
         @media (max-width: 768px) {
@@ -401,7 +378,7 @@ a:hover {
         </div>
         
         <div class="nav-container">
-            <button id="academicButton" style="background:rgba(233, 30, 99, 0.9)">学术成果</button>
+            <button id="academicButton" style="background:rgba(233, 30, 99, 0.9)">全体成员</button>
         </div>
         
         <div id="map"></div>
@@ -411,20 +388,21 @@ a:hover {
     <div id="academicPage">
         <header class="academic-header">
             <button id="returnButton">← 返回地图</button>
-            <h1>学术成果荣誉墙</h1>
-            <p>师生共同创造的智慧结晶</p>
+            <h1>曲星宇导师课题组全体成员</h1>
+            <p>桃李芬芳，岁月留痕</p>
         </header>
 
         <div class="filters">
-            <div class="filter-item active" data-filter-type="all">全部</div>
 
-            <div class="filter-item" data-filter-type="year" data-filter-value="2024">2024年度</div>
-            <div class="filter-item" data-filter-type="year" data-filter-value="2025">2025年度</div>
-            <div class="filter-item" data-filter-type="type" data-filter-value="sci">SCI期刊</div>
-            <div class="filter-item" data-filter-type="type" data-filter-value="ei">EI期刊</div>
-            <div class="filter-item" data-filter-type="type" data-filter-value="core">北大核心</div>
-            <div class="filter-item" data-filter-type="type" data-filter-value="tech">科技核心</div>
+            <div class="filter-item active" data-filter-type="all">全部</div>
+            <div class="filter-item" data-filter-type="year" data-filter-value="2021">2021级</div>
+            <div class="filter-item" data-filter-type="year" data-filter-value="2022">2022级</div>
+            <div class="filter-item" data-filter-type="year" data-filter-value="2023">2023级</div>
+            <div class="filter-item" data-filter-type="year" data-filter-value="2024">2024级</div>
+            <div class="filter-item" data-filter-type="type" data-filter-value="mas">硕士研究生</div>
+            <div class="filter-item" data-filter-type="type" data-filter-value="doc">博士研究生</div>
         </div>
+
 
 
 
@@ -437,44 +415,70 @@ a:hover {
 
             <!--------------------------------------2021届-------------------------------------->
 
-            <div class="paper-card" data-year="2024" data-type="core">
-                <div class="author-profile">
-                    <img src="images/zhuzhenkang.jpg" alt="作者头像" class="author-photo">
-                    <div class="author-motto">
-                        <q>种子在泥土里不说话，但它终会开花。</q>
-                    </div>
-                </div>
-                <h2 class="paper-title">朱振康</h2>
-                <div class="paper-authors">
-                    内置式永磁同步电机无传感器最小损耗控制
-                </div>
-                <div class="paper-info">
-                    <div class="paper-journal">组合机床与自动化加工技术 </div>
-                    <div class="paper-date">发表日期：2024-11-01 </div>
-                    <div class="paper-doi">DOI: 10.13462/j.cnki.mmtamt.2024.11.018 </div>
-                </div>
-            </div>
-
-
-
-            <div class="paper-card" data-year="2024" data-type="tech">
+            <div class="paper-card" data-year="2021" data-type="mas" >
                 <div class="author-profile">
                     <img src="images/yiguanzheng.jpg" alt="作者头像" class="author-photo">
                     <div class="author-motto">
                         <q>人生没有白走的路，每一步都算数。</q>
                     </div>
                 </div>
-                <h2 class="paper-title">衣冠正</h2>
+                <h2 class="paper-title"> 衣冠正  男</h2>
                 <div class="paper-authors">
-                    永磁同步电机改进滑模无位置传感器控制
+                    宁夏回族自治区石嘴山市惠农区
                 </div>
                 <div class="paper-info">
-                    <div class="paper-journal">微特电机 </div>
-                    <div class="paper-date">发表日期：2024-05-28 </div>
-                    <div class="paper-doi">DOI: 10.20026/j.cnki.ssemj.2024.0065 </div>
+                    <div class="paper-journal">电话：13259627138</div>
+                    <div class="paper-journal">邮箱：pengck1998@163.com</div>
+                    <div class="paper-doi">年级：(已毕业) 2021级硕士研究生</div>
+                    <div class="paper-doi">研究方向：电机控制</div>
+                    <div class="paper-doi">毕业去向：宁夏电力有限公司</div>
                 </div>
             </div>
 
+
+
+
+            <div class="paper-card" data-year="2021" data-type="mas">
+                <div class="author-profile">
+                    <img src="images/yanqiuyu.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>且视他人之疑目如盏盏鬼火，大胆去走你的夜路。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title"> 燕秋雨  男</h2>
+                <div class="paper-authors">
+                    山东省淄博市张店区
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：18560399610</div>
+                    <div class="paper-journal">邮箱：                    </div>
+                    <div class="paper-doi">年级：(已毕业) 2021级硕士研究生</div>
+                    <div class="paper-doi">研究方向：故障诊断</div>
+                    <div class="paper-doi">毕业去向：                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="paper-card" data-year="2021" data-type="mas">
+                <div class="author-profile">
+                    <img src="images/zhuzhenkang.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>种子在泥土里不说话，但它终会开花。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title"> 朱振康  男</h2>
+                <div class="paper-authors">
+                    广西壮族自治区崇左市江州区左江华侨农场
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：17624074048</div>
+                    <div class="paper-journal">邮箱：                   </div>
+                    <div class="paper-doi">年级：(已毕业) 2021级硕士研究生</div>
+                    <div class="paper-doi">研究方向：电机控制</div>
+                    <div class="paper-doi">毕业去向：上海思源电气股份有限公司</div>
+                </div>
+            </div>
 
 
          <!-------------------------------------------------------------------------------------->
@@ -485,84 +489,411 @@ a:hover {
 
             <!--------------------------------------2022届-------------------------------------->
 
-            <div class="paper-card" data-year="2024" data-type="sci">
-                <div class="author-profile">
-                    <img src="images/lizhenyang.jpg" alt="作者头像" class="author-photo">
-                    <div class="author-motto">
-                        <q>抱朴守拙，行稳致远。</q>
-                    </div>
-                </div>
-                <h2 class="paper-title">李振洋</h2>
-                <div class="paper-authors">
-                    Research on improved active disturbance rejection control strategy for hydraulic-driven Stewart stabilization platform
-                </div>
-                <div class="paper-info">
-                    <div class="paper-journal">Industrial Robot </div>
-                    <div class="paper-date">发表日期：2024-05-16 </div>
-                    <div class="paper-doi">DOI: 10.1108/IR-03-2024-0086 </div>
-                </div>
-            </div>
-
-
-            <div class="paper-card" data-year="2024" data-type="sci">
-                <div class="author-profile">
-                    <img src="images/wangqinghe.jpg" alt="作者头像" class="author-photo">
-                    <div class="author-motto">
-                        <q>文献读不懂很正常，但别停在第一页。重复和坚持会突然某一天让你豁然开朗。</q>
-                    </div>
-                </div>
-                <h2 class="paper-title">王庆鹤</h2>
-                <div class="paper-authors">
-                    Novel deadbeat direct torque and flux control for interior permanent magnet synchronous motor
-                </div>
-                <div class="paper-info">
-                    <div class="paper-journal">Electrical Engineering</div>
-                    <div class="paper-date">发表日期：2024-07-05</div>
-                    <div class="paper-doi">DOI: 10.1007/s00202-024-02606-2</div>
-                </div>
-            </div>
-
-
-
-            <div class="paper-card" data-year="2024" data-type="sci">
-                <div class="author-profile">
-                    <img src="images/pengchengkun.jpg" alt="作者头像" class="author-photo">
-                    <div class="author-motto">
-                        <q>理论是骨架，实践是血肉。</q>
-                    </div>
-                </div>
-                <h2 class="paper-title">彭成坤</h2>
-                <div class="paper-authors">
-	    <a href="https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/cps2.12104">
-                    A three‐vector model predicting torque control of permanent magnet synchronous motor with a fixed weight coefficient
-	    </a>
-                </div>
-                <div class="paper-info">
-                    <div class="paper-journal">IET Cyber-Physical Systems: Theory & Applications </div>
-                    <div class="paper-date">发表日期：2024-11-14 </div>
-                    <div class="paper-doi">DOI: 10.1049/cps2.12104 </div>
-                </div>
-            </div>
-
-
-
-            <div class="paper-card" data-year="2025" data-type="core">
+            <div class="paper-card" data-year="2022" data-type="mas">
                 <div class="author-profile">
                     <img src="images/chenqilong.jpg" alt="作者头像" class="author-photo">
                     <div class="author-motto">
                         <q>坚持 、稳重。</q>
                     </div>
                 </div>
-                <h2 class="paper-title">陈启隆</h2>
+                <h2 class="paper-title">  陈启隆  男</h2>
                 <div class="paper-authors">
-                    结合扰动观测器的Stewart平台改进非奇异终端滑模控制
+                    河南省驻马店地区西平县
                 </div>
                 <div class="paper-info">
-                    <div class="paper-journal">组合机床与自动化加工技术</div>
-                    <div class="paper-date">发表日期：2025-03-25 </div>
-                    <div class="paper-doi">DOI: 10.1049/cps2.12104 </div>
+                    <div class="paper-journal">电话：17589500047</div>
+                    <div class="paper-journal">邮箱： chenql_sd@163.com</div>
+                    <div class="paper-doi">年级：2022级硕士研究生</div>
+                    <div class="paper-doi">研究方向：并联机器人</div>
+                    <div class="paper-doi">毕业去向：新东北电气(沈阳)高压开关有限公司</div>
                 </div>
             </div>
+
+
+
+            <div class="paper-card" data-year="2022" data-type="mas">
+                <div class="author-profile">
+                    <img src="images/lichangjian.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>人生没有白走的路，每一步都算数。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title"> 李昌健  男</h2>
+                <div class="paper-authors">
+                    辽宁省葫芦岛市建昌县
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：18525733396</div>
+                    <div class="paper-journal">邮箱：2529275422@qq.com</div>
+                    <div class="paper-doi">年级：2022级硕士研究生</div>
+                    <div class="paper-doi">研究方向：故障诊断</div>
+                    <div class="paper-doi">毕业去向：奥克斯集团有限公司</div>
+                </div>
+            </div>
+
+
+            <div class="paper-card" data-year="2022" data-type="mas">
+                <div class="author-profile">
+                    <img src="images/lizhenyang.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>抱朴守拙，行稳致远。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">  李振洋  男</h2>
+                <div class="paper-authors">
+                    河南省周口市淮阳县
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：15093841963</div>
+                    <div class="paper-journal">邮箱：804490877@qq.com</div>
+                    <div class="paper-doi">年级：2022级硕士研究生</div>
+                    <div class="paper-doi">研究方向：并联机器人</div>
+                    <div class="paper-doi">毕业去向：平高集团有限公司</div>
+                </div>
+            </div>
+
+
+
+            <div class="paper-card" data-year="2022" data-type="doc">
+                <div class="author-profile">
+                    <img src="images/pengchengkun.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>理论是骨架，实践是血肉。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">  彭成坤  男</h2>
+                <div class="paper-authors">
+                    河南省周口市太康县
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：18524610813</div>
+                    <div class="paper-journal">邮箱：pengck1998@163.com</div>
+                    <div class="paper-doi">年级：2022级硕士研究生</div>
+                    <div class="paper-doi">年级：2024级博士研究生</div>
+                    <div class="paper-doi">研究方向：电机控制</div>
+                </div>
+            </div>
+
+
+            <div class="paper-card" data-year="2022" data-type="mas">
+                <div class="author-profile">
+                    <img src="images/wangqinghe.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>文献读不懂很正常，但别停在第一页。重复和坚持会突然某一天让你豁然开朗。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">  王庆鹤  男</h2>
+                <div class="paper-authors">
+                    河南省许昌市禹州市
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：15736812993</div>
+                    <div class="paper-journal">邮箱：496024681@qq.com</div>
+                    <div class="paper-doi">年级：2022级硕士研究生</div>
+                    <div class="paper-doi">研究方向：电机控制</div>
+                    <div class="paper-doi">毕业去向：平高集团有限公司</div>
+                </div>
+            </div>
+
+
+            <div class="paper-card" data-year="2022" data-type="mas">
+                <div class="author-profile">
+                    <img src="images/zhangmian.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>文献读不懂很正常，但别停在第一页。重复和坚持会突然某一天让你豁然开朗。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">  张冕  男</h2>
+                <div class="paper-authors">
+                    安徽省宿县地区灵璧县
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：18055781217</div>
+                    <div class="paper-journal">邮箱：                   </div>
+                    <div class="paper-doi">年级：2022级硕士研究生</div>
+                    <div class="paper-doi">研究方向：故障诊断</div>
+                    <div class="paper-doi">毕业去向：                </div>
+                </div>
+            </div>
+
+         <!-------------------------------------------------------------------------------------->
+
+
+
+
+
+            <!--------------------------------------2023届-------------------------------------->
+            <div class="paper-card" data-year="2023" data-type="doc">
+                <div class="author-profile">
+                    <img src="images/zhangshuang.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>理论是骨架，实践是血肉。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">  张爽  女</h2>
+                <div class="paper-authors">
+                   河南省南阳市唐河县
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：13840564879</div>
+                    <div class="paper-journal">邮箱：sutzhangshuang@163.com</div>
+                    <div class="paper-doi">年级：2023级博士研究生</div>
+                    <div class="paper-doi">研究方向：电机控制</div>
+                </div>
+            </div>
+
+
+            <div class="paper-card" data-year="2023" data-type="mas">
+                <div class="author-profile">
+                    <img src="images/dufuzhe.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>不要以你已经做过的事情来判断你的成败得失，而要以你将要做的事情来判断。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">  杜甫哲  男</h2>
+                <div class="paper-authors">
+                    河南省商丘市民权县
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：18740058117</div>
+                    <div class="paper-journal">邮箱： 18740058117@163.com</div>
+                    <div class="paper-doi">年级：2023级硕士研究生</div>
+                    <div class="paper-doi">研究方向：电机控制</div>
+                </div>
+            </div>
+
+
+
+            <div class="paper-card" data-year="2023" data-type="mas">
+                <div class="author-profile">
+                    <img src="images/lijian.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>为者常成 行者常至。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">  李健  男</h2>
+                <div class="paper-authors">
+                    辽宁省阜新市清河门区
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：14740805882</div>
+                    <div class="paper-journal">邮箱： 468709946@qq.com</div>
+                    <div class="paper-doi">年级：2023级硕士研究生</div>
+                    <div class="paper-doi">研究方向：故障诊断</div>
+                </div>
+            </div>
+
+
+            <div class="paper-card" data-year="2023" data-type="mas">
+                <div class="author-profile">
+                    <img src="images/qiaochengxiang.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>抱朴守拙，行稳致远。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">  乔成祥  男</h2>
+                <div class="paper-authors">
+                    山东省枣庄市滕州市
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：13176370732</div>
+                    <div class="paper-journal">邮箱：sjh13176370732@163.com</div>
+                    <div class="paper-doi">年级：2023级硕士研究生</div>
+                    <div class="paper-doi">研究方向：并联机器人</div>
+                </div>
+            </div>
+
+
+
+            <div class="paper-card" data-year="2023" data-type="mas">
+                <div class="author-profile">
+                    <img src="images/yanchengshuo.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>努力运气并存，平步青云成神。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">  闫盛硕  男</h2>
+                <div class="paper-authors">
+                    辽宁省铁岭市开原市
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：13236753305</div>
+                    <div class="paper-journal">邮箱：3125162796@qq.com</div>
+                    <div class="paper-doi">年级：2023级硕士研究生</div>
+                    <div class="paper-doi">研究方向：电机控制</div>
+                </div>
+            </div>
+
+
+            <div class="paper-card" data-year="2023" data-type="mas">
+                <div class="author-profile">
+                    <img src="images/zhujianhui.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>文献读不懂很正常，但别停在第一页。重复和坚持会突然某一天让你豁然开朗。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">  朱健珲  男</h2>
+                <div class="paper-authors">
+                    辽宁省辽阳市灯塔县
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：18740232108</div>
+                    <div class="paper-journal">邮箱：zjh0920@smail.sut.edu.cn</div>
+                    <div class="paper-doi">年级：2023级硕士研究生</div>
+                    <div class="paper-doi">研究方向：故障诊断</div>
+                </div>
+            </div>
+
+
+            <div class="paper-card" data-year="2023" data-type="mas">
+                <div class="author-profile">
+                    <img src="images/zhaijiasheng.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>当你觉得为时已晚的时候，恰恰是最早的时候。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">  翟家圣  男</h2>
+                <div class="paper-authors">
+                    山东省淄博市博山区
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：14740805882</div>
+                    <div class="paper-journal">邮箱：17852978573@163.com</div>
+                    <div class="paper-doi">年级：2023级硕士研究生</div>
+                    <div class="paper-doi">研究方向：并联机器人</div>
+                </div>
+            </div>
+
+         <!-------------------------------------------------------------------------------------->
+
+
+
+
+
+
+
+            <!--------------------------------------2024届-------------------------------------->
+            <div class="paper-card" data-year="2024" data-type="mas">
+                <div class="author-profile">
+                    <img src="images/liupeng.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>你生而有翼，为何竟愿一生匍匐前进，形如虫蚁。——贾拉尔·阿德丁·鲁米</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">  刘鹏  男</h2>
+                <div class="paper-authors">
+                   贵州省毕节地区毕节市
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：18386095786</div>
+                    <div class="paper-journal">邮箱：1764876798@qq.com</div>
+                    <div class="paper-doi">年级：2024级硕士研究生</div>
+                    <div class="paper-doi">研究方向：故障诊断</div>
+                </div>
+            </div>
+
+
+            <div class="paper-card" data-year="2024" data-type="mas">
+                <div class="author-profile">
+                    <img src="images/ninghaonan.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>坚持是成功的通途，每一次咬牙坚守，都是在为梦想添砖加瓦。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title"> 宁浩楠  男</h2>
+                <div class="paper-authors">
+                    辽宁省锦州市义县
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：13840638259</div>
+                    <div class="paper-journal">邮箱： 2661804898@qq.com</div>
+                    <div class="paper-doi">年级：2024级硕士研究生</div>
+                    <div class="paper-doi">研究方向：电机控制</div>
+                </div>
+            </div>
+
+
+
+            <div class="paper-card" data-year="2024" data-type="mas">
+                <div class="author-profile">
+                    <img src="images/xiaoshenzhi.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>不要以你已经做过的事情来判断你的成败得失，而要以你将要做的事情来判断。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">  肖身智  男</h2>
+                <div class="paper-authors">
+                    江西省吉安地区吉安县
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：15949668941</div>
+                    <div class="paper-journal">邮箱： 2680158424@qq.com</div>
+                    <div class="paper-doi">年级：2024级硕士研究生</div>
+                    <div class="paper-doi">研究方向：故障诊断</div>
+                </div>
+            </div>
+
+
+            <div class="paper-card" data-year="2024" data-type="mas">
+                <div class="author-profile">
+                    <img src="images/yushujie.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>博观而约取，厚积而薄发。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">  虞舒捷  男</h2>
+                <div class="paper-authors">
+                    浙江省金华市东阳县
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：15167972866</div>
+                    <div class="paper-journal">邮箱：2100164556@qq.com</div>
+                    <div class="paper-doi">年级：2024级硕士研究生</div>
+                    <div class="paper-doi">研究方向：并联机器人</div>
+                </div>
+            </div>
+
+
+
+            <div class="paper-card" data-year="2024" data-type="mas">
+                <div class="author-profile">
+                    <img src="images/youzhibin.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>慢慢学，慢慢看。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">  由治斌  男</h2>
+                <div class="paper-authors">
+                    辽宁省鞍山市千山区
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：13309812730</div>
+                    <div class="paper-journal">邮箱：781340701@qq.com</div>
+                    <div class="paper-doi">年级：2024级硕士研究生</div>
+                    <div class="paper-doi">研究方向：新能源</div>
+                </div>
+            </div>
+
+
+            <div class="paper-card" data-year="2024" data-type="mas">
+                <div class="author-profile">
+                    <img src="images/zhangxuchen.jpg" alt="作者头像" class="author-photo">
+                    <div class="author-motto">
+                        <q>步履即疆界，世界在行囊。</q>
+                    </div>
+                </div>
+                <h2 class="paper-title">  张旭晨  男</h2>
+                <div class="paper-authors">
+                    河南省新乡市卫滨区
+                </div>
+                <div class="paper-info">
+                    <div class="paper-journal">电话：18567565163</div>
+                    <div class="paper-journal">邮箱：18567565163@163.com</div>
+                    <div class="paper-doi">年级：2024级硕士研究生</div>
+                    <div class="paper-doi">研究方向：并联机器人</div>
+                </div>
+            </div>
+
 
 
          <!-------------------------------------------------------------------------------------->
@@ -619,7 +950,7 @@ a:hover {
 
     <script>
         // ================== 全局配置 ==================
-        const ENCODED_PASSWORD = 'U3V0MjAyNQ=='; // Base64编码的Sut2025，设置密码
+        const ENCODED_PASSWORD = 'U3V0MjAyNQ=='; // Base64编码的Sut2025
         let loginAttempts = 0;
         let mapInstance = null;
         let allMarkers = [];
@@ -645,7 +976,6 @@ a:hover {
                 setTimeout(() => mapInstance.invalidateSize(), 100);
             }
         }
-
 
         // ================== 密码验证 ==================
         function checkPassword() {
@@ -679,7 +1009,6 @@ a:hover {
             }
         }
 
-
         // ================== 地图功能 ==================
         function initializeMap() {
             // 地图初始化
@@ -698,6 +1027,11 @@ a:hover {
                 titleCancel: '退出全屏',
                 forceSeparateButton: true
             }).addTo(mapInstance);
+
+
+
+
+
 
 
 
@@ -737,11 +1071,11 @@ a:hover {
 
 
                 // 宁夏回族自治区
-                { lat: 39.2345, lng: 106.7843, title: '衣冠正  男', address: '宁夏石嘴山市石嘴山区',     phone: '13259627138',  feature: '2021级硕士研究生', photo: 'images/wangqinghe.jpg' },
+                { lat: 39.2345, lng: 106.7843, title: '衣冠正  男', address: '宁夏石嘴山市石嘴山区',     phone: '0416-773-XXXX',  feature: '2021级硕士研究生', photo: 'images/wangqinghe.jpg' },
 
 
                 // 广西壮族自治区
-                { lat: 23.2179, lng: 108.8165, title: '朱振康  男',   address: '广西南宁市宾阳县',        phone: '17624074048',  feature: '2021级硕士研究生', photo: 'images/wangqinghe.jpg' },
+                { lat: 23.2179, lng: 108.8165, title: '朱振康  男',   address: '广西南宁市宾阳县',        phone: '0416-773-XXXX',  feature: '2021级硕士研究生', photo: 'images/wangqinghe.jpg' },
 
 
                 // 贵州省
